@@ -113,6 +113,23 @@ public class Character
             // Après la boucle While qui gère les combats et la succession des attaques.
 
             // Affiche le vainqueur ou annonce un match nul.
+
+            // EXPLICATIONS DE LA SYNTAXE var...
+
+            // characters.Where(c => c.IsAlive()).ToList() utilise LINQ (Language Integrated Query)
+            // pour filtrer la liste characters. Where est une méthode d'extension LINQ
+            // qui applique un prédicat à chaque élément de la collection characters.
+            // Le prédicat ici est c => c.IsAlive(), ce qui signifie que la méthode Where
+            // sélectionne uniquement les éléments de characters pour lesquels la méthode
+            // IsAlive() retourne true. Ça filtre tous les personnages qui sont "vivants" (non KO)
+            // .ToList() convertit ensuite le résultat filtré en une nouvelle liste, List<Character>.
+
+            // var aliveCharacters = ... : var est un mot-clé en C# qui permet de déclarer une variable
+            // sans spécifier explicitement son type. Le type est déduit par le compilateur
+            // à partir de l'expression utilisée pour initialiser la variable. Ici, comme ToList()
+            // retourne une List<T>, où T est le type des éléments dans la collection characters
+            // (probablement Character ou un type similaire), aliveCharacters sera de type List<Character>.
+
             var aliveCharacters = characters.Where(c => c.IsAlive()).ToList();
             if (aliveCharacters.Count == 1)
             {
