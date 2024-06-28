@@ -28,7 +28,7 @@ public class Character
     public void Attack(Character opponent)
     {
         // introduit la possibilité de rater son attaque
-        bool attackMissed = random.Next(0, 100) < 10; // soit 10% de rater son attaque
+        bool attackMissed = random.Next(0, 100) < 2; // soit 2% de rater complètement son attaque
 
         if (attackMissed)
         {
@@ -38,7 +38,7 @@ public class Character
         {
             // Définir une plage de variation pour les dommages (par exemple, +/- 20% de la force d'attaque)
             int minDamage = (int)(AttackStrength * 0.8);
-            int maxDamage = (int)(AttackStrength * 1.2);
+            int maxDamage = (int)(AttackStrength * 2);
 
             int damage = random.Next(minDamage, maxDamage + 1) - opponent.DefenseStrength;
 
@@ -46,16 +46,20 @@ public class Character
             if (damage > 0)
             {
                 opponent.HealthPoints = Math.Max(0, opponent.HealthPoints - damage);
-            }
 
-            // Vérifier si l'opposant est KO après l'attaque
-            if (opponent.HealthPoints <= 0)
-            {
-                Console.WriteLine($"{Name} attaque {opponent.Name} et lui cause {damage} dégâts. {opponent.Name} est KO.");
+                // Vérifier si l'opposant est KO après l'attaque
+                if (opponent.HealthPoints <= 0)
+                {
+                    Console.WriteLine($"{Name} attaque {opponent.Name} et lui cause {damage} points de dégâts. {opponent.Name} est KO.");
+                }
+                else
+                {
+                    Console.WriteLine($"{Name} attaque {opponent.Name} et lui cause {damage} points de dégâts. {opponent.Name} a encore {opponent.HealthPoints} points de vie.");
+                }
             }
             else
             {
-                Console.WriteLine($"{Name} attaque {opponent.Name} et lui cause {damage} dégâts. {opponent.Name} a encore {opponent.HealthPoints} points de vie.");
+                Console.WriteLine($"{Name} tente une attaque contre {opponent.Name} mais rate son coup.");
             }
         }
     }
@@ -64,25 +68,66 @@ public class Character
     {
         public static void Main(string[] args)
         {
-            Character character1 = new Character("🐥", 100, 20, 10);
-            Character character2 = new Character("🐰", 100, 20, 10);
+            Character character1 = new Character("🐥", 100, 20, 20);
+            Character character2 = new Character("🐰", 100, 20, 20);
+            Character character3 = new Character("🐷", 100, 20, 20);
 
-            while (character1.IsAlive() && character2.IsAlive())
+            Random rand = new Random();
+            List<Character> characters = new List<Character> { character1, character2, character3 };
+
+            // On utilise un nombre aléatoire AVANT la BOUCLE de combat, pour déterminer qui attaque en premier.//
+            int attackerIndex = random.Next(characters.Count);
+
+            // plutôt qu'un switch/case 1, case 2, case 3 qui impose de répéter le même code, on crée une liste de characters sur laquelle on va boucler.
+           
+            while (characters.Count(c => c.IsAlive()) > 1)
             {
-                character1.Attack(character2);
-                if (character2.IsAlive())
+                Character attacker = characters[attackerIndex];
+
+                // On récupère l'index du premier personnage vivant après l'attaquant.
+                // C'est donc le premier "defender" vivant.
                 {
-                    character2.Attack(character1);
+                    int defenderIndex = (attackerIndex + 1) % characters.Count;
+                    while (!characters[defenderIndex].IsAlive())
+                    {
+                        defenderIndex = (defenderIndex + 1) % characters.Count;
+                    }
+
+                    Character defender = characters[defenderIndex];
+
+                // L'attaquant attaque le défenseur.
+                    if (attacker.IsAlive() && defender.IsAlive())
+                    {
+                        attacker.Attack(defender);
+                    }
+
+                    // Trouver l'index du prochain attaquant vivant.
+                    attackerIndex = (defenderIndex + 1) % characters.Count;
+                    while (!characters[attackerIndex].IsAlive())
+                    {
+                        attackerIndex = (attackerIndex + 1) % characters.Count;
+                    }
                 }
             }
 
-            if (character1.IsAlive())
+            // Après la boucle While qui gère les combats et la succession des attaques.
+
+            // Affiche le vainqueur ou annonce un match nul.
+            var aliveCharacters = characters.Where(c => c.IsAlive()).ToList();
+            if (aliveCharacters.Count == 1)
             {
-                Console.WriteLine($"{character1.Name} gagne!");
+                // Il y a bien un seul survivant et donc un vainqueur unique.
+                Console.WriteLine($"{aliveCharacters[0].Name} gagne!");
+            }
+            else if (aliveCharacters.Count == 0)
+            {
+                // Tous les personnages sont KO. (Erreur peu probable mais gérée quand même.)
+                Console.WriteLine($"Aucun vainqueur, match nul !");
             }
             else
             {
-                Console.WriteLine($"{character2.Name} gagne!");
+                // Plusieurs survivants. Cas improbable mais géré pour la robustesse du code.
+                Console.WriteLine($"Erreur ! Il ne peut y avoir de vainqueur ex-aequo.");
             }
         }
     }
