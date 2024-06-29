@@ -5,6 +5,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <!-- <StartupObject>MyconsoleApp.Program2</StartupObject> On Spécifie ici Program2 ou Program3 comme point d'entrée -->
   </PropertyGroup>
 
 </Project>

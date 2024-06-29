@@ -7,9 +7,9 @@
 /Users/cedrickmarie/MyconsoleApp/MyconsoleApp/obj/Debug/net8.0/MyconsoleApp.AssemblyInfoInputs.cache
 /Users/cedrickmarie/MyconsoleApp/MyconsoleApp/obj/Debug/net8.0/MyconsoleApp.AssemblyInfo.cs
 /Users/cedrickmarie/MyconsoleApp/MyconsoleApp/obj/Debug/net8.0/MyconsoleApp.csproj.CoreCompileInputs.cache
+/Users/cedrickmarie/MyconsoleApp/MyconsoleApp/obj/Debug/net8.0/MyconsoleApp.sourcelink.json
 /Users/cedrickmarie/MyconsoleApp/MyconsoleApp/obj/Debug/net8.0/MyconsoleApp.dll
 /Users/cedrickmarie/MyconsoleApp/MyconsoleApp/obj/Debug/net8.0/refint/MyconsoleApp.dll
 /Users/cedrickmarie/MyconsoleApp/MyconsoleApp/obj/Debug/net8.0/MyconsoleApp.pdb
 /Users/cedrickmarie/MyconsoleApp/MyconsoleApp/obj/Debug/net8.0/MyconsoleApp.genruntimeconfig.cache
 /Users/cedrickmarie/MyconsoleApp/MyconsoleApp/obj/Debug/net8.0/ref/MyconsoleApp.dll
-/Users/cedrickmarie/MyconsoleApp/MyconsoleApp/obj/Debug/net8.0/MyconsoleApp.sourcelink.json
